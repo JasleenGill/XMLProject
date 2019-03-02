@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+		<style>
+	
+		
+table{
+	border-collapse:collapse;
+		width:70%;
+		 align:center;
+		}
+		tr:nth-child(even){
+		background-color:#f2f2f2;
+		}
+		tr:hover{background-color:#ddd;}
+		th{
+		padding-top:10px;
+		padding-bottom:10px;
+	   
+		
+		text-align:left;
+		
+		
+		
+		}
+		
+		td{
+		height:20px;
+		vertical-align:bottom;
+		}
+		th,td{
+		padding:8px;
+		}
+		</style>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+
+.topnav input[type=text] {
+  padding: 6px;
+  margin-top: 68px;
+  font-size: 47px;
+  border: none;
+}
+.search{
+font-size: 17px;}
+
+.fa fa-search{
+
+}
+@media screen and (max-width: 1600px) {
+  .topnav .search-container {
+    float: none;
+  }
+  #myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 60%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+ 
+  </style>
+    </head>
+<body background="carss.jpeg">
+
+<form >
+<h1 align="center">List Of Cars</h1>
+
+  <input type="text" id="myInput" onkeyup="search()" placeholder="Search by make..." >
+ <input type="button" id="myInput1" onclick="func()"  value="X-Path">
+
+      <!--<input type="text" id="myInput" placeholder="Search.." name="search" class="search">
+      <button type="submit" onclick="func()"><i class="fa fa-search"></i></button>-->
+    </form>
+<p id="demo"></p>
+
+<script>
+
+var xhttp = new XMLHttpRequest();
+var xmlDoc;
+xhttp.open("GET", "auto4.xml", true);
+xhttp.send();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myFunction(this);
+		//showResult(xhttp.responseXML);
+    }
+};
+ var make,model,prc,yr,km, i, txt, p, y,btn;
+ function func(){
+
+var xhttp = new XMLHttpRequest();
+var xmlDoc;
+xhttp.open("GET", "auto4.xml", true);
+xhttp.send();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+		showResult(xhttp.responseXML);
+    }
+};
+ }
+      
+	  
+function search() {
+  // Declare variables 
+
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("cars");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+	 td1 = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+	 
+  }
+  
+};
+ 
+ function showResult(xml) {
+
+ input = document.getElementById("myInput");
+  filter = input.value;
+
+    var txt = "";
+ 
+  path ="/automobile/vehicle/make";
+   path1="/automobile/vehicle/model";
+    path2 ="/automobile/vehicle/year";
+   txt = "<table border='5' bgcolor='white' id='cars1'><tr><th>Make</th><th>Model</th><th>Year</th></tr>"; 
+        var nodes = xml.evaluate(path, xml, null, XPathResult.ANY_TYPE, null);
+        var result = nodes.iterateNext();
+		var nodes1 = xml.evaluate(path1, xml, null, XPathResult.ANY_TYPE, null);
+        var result1 = nodes1.iterateNext();
+		var nodes2 = xml.evaluate(path2, xml, null, XPathResult.ANY_TYPE, null);
+        var result2 = nodes2.iterateNext();
+        while (result) {
+		        
+            txt +=  "<tr><td>" +result.childNodes[0].nodeValue + "</td>";
+			txt +=  "<td>" +result1.childNodes[0].nodeValue + "</td>";
+			txt +=  "<td>" +result2.childNodes[0].nodeValue + "</td></tr>";
+            
+            result = nodes.iterateNext();
+			result1 = nodes1.iterateNext();
+			 result2 = nodes2.iterateNext();
+        } 
+		 
+		
+    txt += "</table>"
+    document.getElementById("demo").innerHTML = txt;
+}
+function myFunction() {
+    xmlDoc = xhttp.responseXML;
+    txt = "<table border='5' bgcolor='white' id='cars'><tr><th>Make</th><th>Model</th><th>Year</th><th>KM/Miles</th><th>Price</th><th></th></tr>"; 
+    make =xmlDoc.getElementsByTagName("make");
+    model = xmlDoc.getElementsByTagName("model");
+	prc =xmlDoc.getElementsByTagName("price");
+    yr = xmlDoc.getElementsByTagName("year");
+   km= xmlDoc.getElementsByTagName("km");
+  
+   
+    for(i = 0; i < make.length; i++){
+        txt += "<tr><td>" + make[i].childNodes[0].nodeValue + "</td>";
+        txt += "<td>" + model[i].childNodes[0].nodeValue + "</td>";
+		txt += "<td>" + yr[i].childNodes[0].nodeValue + "</td>";
+		txt += "<td>" + km[i].childNodes[0].nodeValue + "</td>";
+		txt += "<td>" + prc[i].childNodes[0].nodeValue + "</td>";
+		txt += "<td><button id = 'button1' onclick='del(this)'>Delete</button> <button id = 'button2' onclick='edit(this)'>Edit</button></td></tr>";
+		 
+		}
+
+		 for(i = 0; i < 1; i++){
+        txt += "<tr><td><input type='text' id='make'/></td>";
+        txt += "<td><input type='text' id='model'/></td>";
+		txt += "<td><input type='text' id='year'/></td>";
+		txt += "<td><input type='text' id='km'/></td>";
+		txt += "<td><input type='text' id ='prc'/></td>";
+	    txt +="<td><button id = 'button3' onClick='add(this)' >Add</button></td></tr>";
+		}
+     
+ 
+ txt += "</table>"
+	
+    document.getElementById("demo").innerHTML = txt;
+
+}
+
+function del(r){
+
+
+if (confirm("Do you want to delete the row" )) {
+var i = r.parentNode.parentNode.rowIndex;
+document.getElementById("cars").deleteRow(i);
+}
+	  
+}
+
+function edit(r){
+
+
+var y = r.parentNode.parentNode.rowIndex;
+confirm("Do you want to edit the row?");
+ 
+
+
+           var table = document.getElementById("cars");
+	        var make=table.rows[y].cells[0].innerHTML;
+             var model =table.rows[y].cells[1].innerHTML;
+			var year =table.rows[y].cells[2].innerHTML;
+            var km = table.rows[y].cells[3].innerHTML;
+			var prc = table.rows[y].cells[4].innerHTML;
+
+			
+            var make_data=make;
+			var model_data = model;
+			var year_data = year;
+            var km_data = km;
+			var prc_data = prc;
+			
+			table.rows[y].cells[0].innerHTML="<input type='text' id='make_text' value='"+make_data+"'>";
+			table.rows[y].cells[1].innerHTML="<input type='text' id='model_text' value='"+model_data+"'>";
+			table.rows[y].cells[2].innerHTML="<input type='text' id='year_text' value='"+year_data+"'>";
+			table.rows[y].cells[3].innerHTML="<input type='text' id='km_text' value='"+km_data+"'>";
+			table.rows[y].cells[4].innerHTML="<input type='text' id='prc_text' value='"+prc_data+"'>";
+			table.rows[y].cells[5].innerHTML="<button id = 'button1' onclick='del(this)'>Delete</button><button id = 'button4' onclick='save(this)'>Save</button>";
+		
+		
+		
+}
+function save(r){
+var y = r.parentNode.parentNode.rowIndex;
+confirm("Do You Want to save the changes");
+ 
+        var make_val=document.getElementById("make_text").value;
+        var model_val=document.getElementById("model_text").value;
+		var year_val=document.getElementById("year_text").value;
+		var km_val=document.getElementById("km_text").value;
+		var prc_val=document.getElementById("prc_text").value;
+
+		  var table = document.getElementById("cars");
+            table.rows[y].cells[0].innerHTML=make_val;
+			table.rows[y].cells[1].innerHTML=model_val;
+			table.rows[y].cells[2].innerHTML=year_val;
+			table.rows[y].cells[3].innerHTML=km_val;
+			table.rows[y].cells[4].innerHTML=prc_val;
+ table.rows[y].cells[5].innerHTML="<button id = 'button1' onclick='del(this)'>Delete</button> <button id = 'button2' onclick='edit(this)'>Edit</button>";
+ xmlDoc.getElementsByTagName("make")[i].childNodes[0].nodeValue="text"; 
+}
+ function add(r) {
+var i = r.parentNode.parentNode.rowIndex;
+
+            var make = document.getElementById("make");
+            var model = document.getElementById("model");
+			var year = document.getElementById("year");
+            var km = document.getElementById("km");
+			var prc = document.getElementById("prc");
+        
+            addRow(make.value, model.value,year.value,km.value,prc.value,i);
+            make.value = "";
+            model.value = "";
+			year.value="";
+			km.value="";
+			prc.value="";
+        }
+function addRow(make,model,year,km,prc,i){
+  var txt1 = document.getElementById("cars");;
+
+  
+  //Add Row.
+
+            row = txt1.insertRow(i);
+ 
+            //Add Name cell.
+            var cell = row.insertCell(0);
+            cell.innerHTML = make;
+ 
+            //Add Country cell.
+            cell = row.insertCell(1);
+            cell.innerHTML = model;
+			cell = row.insertCell(2);
+			cell.innerHTML = year;
+			cell = row.insertCell(3);
+			cell.innerHTML = km;
+			cell = row.insertCell(4);
+			cell.innerHTML = prc;
+		
+		
+		cell = row.insertCell(-1);
+            var btnDel = document.createElement("INPUT");
+            btnDel.type = "button";
+            btnDel.value = "Delete";
+            btnDel.setAttribute("onclick", "del(this);");
+            cell.appendChild(btnDel);
+			
+	//Add Edit button
+
+            var btnEdit = document.createElement("INPUT");
+            btnEdit.type = "button";
+            btnEdit.value = "Edit";
+            btnEdit.setAttribute("onclick", "edit(this);");
+            cell.appendChild(btnEdit);	
+}	
+	
+
+</script>
+</body>
+</html>

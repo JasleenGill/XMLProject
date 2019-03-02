@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<automobile id="auto">
+  <vehicle >
+    <make>Toyota</make>
+    <model>Camry LE</model>
+    <year>2018</year>
+    <km>1600</km>
+    <price>$15990</price>
+	
+  </vehicle>
+   <vehicle>
+    <make>BMW</make>
+    <model>ICON M3 SEDAN</model>
+    <year>2017</year>
+    <km>1200</km>
+    <price>$75990</price>
+	
+  </vehicle>
+   <vehicle>
+    <make>Toyota</make>
+    <model>Camry SE</model>
+    <year>2018</year>
+    <km>1400</km>
+    <price>$18990</price>
+	
+  </vehicle>
+   <vehicle>
+    <make>Toyota</make>
+    <model>Camry XLE</model>
+    <year>2018</year>
+    <km>16</km>
+    <price>$25990</price>
+	
+  </vehicle>
+   <vehicle>
+    <make>BMW</make>
+    <model>230ix Drive Coupe</model>
+    <year>2018</year>
+    <km>200</km>
+    <price>$50990</price>
+
+  </vehicle>
+   <vehicle>
+    <make>BMW</make>
+    <model>X1x Drive 281</model>
+    <year>2018</year>
+    <km>0</km>
+    <price>$48500</price>
+	
+  </vehicle>
+   <vehicle>
+    <make>Dodge</make>
+    <model>Charger</model>
+    <year>2018</year>
+    <km>16800</km>
+    <price>$25990</price>
+	
+  </vehicle>
+   <vehicle>
+    <make>Dodge</make>
+    <model>Durango</model>
+    <year>2018</year>
+    <km>7800</km>
+    <price>$29990</price>
+	
+  </vehicle>
+   <vehicle>
+    <make>Mustang</make>
+    <model>Ford GT Coupe</model>
+    <year>2017</year>
+    <km>1000</km>
+    <price>$30000</price>
+	<delete>del</delete>
+  </vehicle>
+   <vehicle>
+    <make>Dodge</make>
+    <model>Grand Caravon</model>
+    <year>2016</year>
+    <km>5000</km>
+    <price>$27570</price>
+	
+  </vehicle>
+</automobile>
